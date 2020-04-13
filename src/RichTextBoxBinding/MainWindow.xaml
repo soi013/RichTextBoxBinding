@@ -1,0 +1,49 @@
+﻿<Window
+   x:Class="RichTextBoxBinding.MainWindow"
+   xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+   xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+   xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+   xmlns:local="clr-namespace:RichTextBoxBinding"
+   xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+   Width="600"
+   Height="180"
+   mc:Ignorable="d">
+   <Window.Resources>
+      <local:RichTextVmToFlowDocumentConverter x:Key="RichTextVmToFlowDocumentConverter" />
+   </Window.Resources>
+   <Window.DataContext>
+      <local:MainWindowViewModel />
+   </Window.DataContext>
+   <StackPanel>
+      <UniformGrid Columns="2">
+         <RichTextBox>
+            <FlowDocument>
+               <Paragraph>
+                  <Run Text="FixText_" />
+                  <Run Foreground="Green" Text="{Binding NormalText}" />
+               </Paragraph>
+            </FlowDocument>
+         </RichTextBox>
+         <RichTextBox>
+            <FlowDocument>
+               <Paragraph>
+                  <Run Text="FixText_" />
+                  <Run
+                     FontStyle="Italic"
+                     Foreground="{Binding TextColor}"
+                     Text="{Binding NormalText}" />
+               </Paragraph>
+            </FlowDocument>
+         </RichTextBox>
+         <RichTextBox local:RichTextBoxHelper.Document="{Binding Document}" />
+         <RichTextBox local:RichTextBoxHelper.Document="{Binding Document}" />
+         <RichTextBox local:RichTextBoxHelper.Document="{Binding RichVM, Converter={StaticResource RichTextVmToFlowDocumentConverter}}" />
+         <RichTextBox local:RichTextBoxHelper.Document="{Binding RichVM, Converter={StaticResource RichTextVmToFlowDocumentConverter}}" />
+      </UniformGrid>
+      <CheckBox
+         Margin="20"
+         HorizontalAlignment="Center"
+         Content="Change in VM!"
+         IsChecked="{Binding Changed}" />
+   </StackPanel>
+</Window>
